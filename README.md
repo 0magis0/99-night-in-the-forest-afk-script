@@ -1,4 +1,4 @@
-# Roblox AFK Script (AutoHotkey)
+# Roblox AFK Scrip
 
 This project provides an AutoHotkey script designed to help users stay active (AFK) in Roblox games, preventing them from being kicked for inactivity. The script automates basic actions such as pressing the spacebar and clicking the mouse.
 
