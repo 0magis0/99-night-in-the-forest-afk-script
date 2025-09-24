@@ -1,55 +1,55 @@
 #Persistent
 
-; مؤقت للضغط العشوائي على المسطرة
-SetTimer, PressKey, 1000
+; Timer for random spacebar presses
+SetTimer, RandomSpacePress, 1000
 
-; مؤقت للضغط على زر 7 كل 5 دقائق ثم النقر بالماوس
-SetTimer, PressSevenAndMouse, 240000 ; 300000 مللي ثانية = 5 دقائق
+; Timer for pressing 7 key and mouse click every 4 minutes
+SetTimer, PressSevenWithClick, 240000
 
-; مؤقت جديد للوظيفة الإضافية
-SetTimer, NewFunction, 600000 ; سيتم تنفيذ الوظيفة الجديدة كل دقيقة (يمكنك تغيير الوقت حسب الحاجة)
+; Timer for additional functionality every 10 minutes
+SetTimer, AdditionalSequence, 600000
 
 return
 
-; دالة الضغط العشوائي على المسطرة
-PressKey:
-    Random, randomTime, 1, 5
+; Function for random interval spacebar pressing
+RandomSpacePress:
+    Random, randomInterval, 1, 5
     
-    if (randomTime = 1)
-        sleepTime := 5000 ; 5 ثوان
-    else if (randomTime = 2)
-        sleepTime := 10000 ; 10 ثوان
-    else if (randomTime = 3)
-        sleepTime := 20000 ; 20 ثانية
-    else if (randomTime = 4)
-        sleepTime := 60000 ; 60 ثانية (دقيقة واحدة)
-    else if (randomTime = 5)
-        sleepTime := 30000 ; 30 ثانية
+    if (randomInterval = 1)
+        waitTime := 5000
+    else if (randomInterval = 2)
+        waitTime := 10000
+    else if (randomInterval = 3)
+        waitTime := 20000
+    else if (randomInterval = 4)
+        waitTime := 60000
+    else if (randomInterval = 5)
+        waitTime := 30000
     
-    Sleep, %sleepTime%
-    Send, {Space} ; ضغط على مفتاح المسافة
+    Sleep, %waitTime%
+    Send, {Space}
     
-    ; إعادة ضبط المؤقت
-    SetTimer, PressKey, -1000
+    ; Reset timer
+    SetTimer, RandomSpacePress, -1000
 return
 
-; دالة الضغط على زر 7 ثم النقر بالماوس
-PressSevenAndMouse:
-    Send, {7} ; الضغط على زر رقم 7
-    Sleep, 500 ; انتظار نصف ثانية
-    Click ; نقر بالزر الأيسر للماوس
+; Function for 7 key press followed by mouse click
+PressSevenWithClick:
+    Send, {7}
+    Sleep, 500
+    Click
 return
 
-; الوظيفة الجديدة
-NewFunction:
-    Send, {7} ; الضغط على زر 7
-    Sleep, 500 ; انتظار نصف ثانية
-    Click ; النقر بالزر الأيسر للماوس
-    Sleep, 2000 ; انتظار ثانيتين
-    Send, {7} ; الضغط على زر 7 مرة أخرى
-    Sleep, 500 ; انتظار نصف ثانية
-    Click ; النقر بالزر الأيسر للماوس مرة أخرى
+; Additional sequence function
+AdditionalSequence:
+    Send, {7}
+    Sleep, 500
+    Click
+    Sleep, 2000
+    Send, {7}
+    Sleep, 500
+    Click
 return
 
-; مفتاح لإيقاف التشغيل (F12)
+; Exit script with F12 key
 F12::ExitApp
