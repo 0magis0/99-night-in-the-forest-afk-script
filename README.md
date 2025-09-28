@@ -10,14 +10,14 @@ To benefit from these scripts, you must have:
 
 ## How to Use
 
-1.  Download the script files (`cookupdate.ahk` and `afkupdate.ahk`).
+1.  Download the script files (`cook.ahk` and `afk.ahk`).
 2.  Make sure AutoHotkey is installed on your computer.
-3.  Double-click the script file you wish to run (e.g., `cookupdate.ahk`). An AutoHotkey icon will appear in your system tray, indicating that the script is running.
+3.  Double-click the script file you wish to run (e.g., `cook.ahk`). An AutoHotkey icon will appear in your system tray, indicating that the script is running.
 4.  To stop any script, right-click the AutoHotkey icon in the system tray and select "Exit" or use the dedicated keyboard shortcut for stopping (explained in each script section).
 
 **Important Note:** Do not run the cooking script and the AFK script simultaneously to avoid command conflicts and synchronization errors.
 
-## Cooking Script (cookupdate.ahk)
+## Cooking Script (cook.ahk)
 
 This script is designed to automate the cooking process in the game, ensuring you have enough "Stew" to survive. The script relies on repeatedly pressing the 'E' key to cook, then using the '9' key (where you should place the Stew) and clicking the mouse to collect the cooked Stew.
 
@@ -39,7 +39,7 @@ This script is designed to automate the cooking process in the game, ensuring yo
 *   Press the `Pause` key to stop/start automatic 'E' pressing.
 *   Press `Ctrl + Esc` to completely close the script.
 
-## AFK Script (afkupdate.ahk)
+## AFK Script (afk.ahk)
 
 This script is designed to help you stay AFK (Away From Keyboard) safely in "99 Nights in the Forest," ensuring you don't die from hunger. The script periodically presses the "9" key (where the Stew should be) and clicks the mouse, in addition to randomly pressing the Space key to prevent you from being kicked out of the game due to inactivity.
 
