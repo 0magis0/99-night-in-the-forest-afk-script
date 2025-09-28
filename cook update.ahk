@@ -2,58 +2,60 @@
 #SingleInstance Force
 #MaxThreadsPerHotkey 2
 
-; === التوقيتات الأساسية ===
-TimerInterval := 5000          ; ضغط E كل 5 ثواني
-MainCycle := 4 * 60 * 1000     ; الدورة الرئيسية كل 4 دقائق
+; === Configuration Constants ===
+E_KEY_INTERVAL := 5000          ; E key press interval (5 seconds)
+MAIN_CYCLE_DURATION := 4 * 60 * 1000  ; Main cycle duration (4 minutes)
 
-; === متغيرات التحكم ===
-ClickCount := 0
-IsMouseSequenceActive := false
-_keepFiring := true
+; === Global Control Variables ===
+mouseClickCounter := 0
+isMouseSequenceRunning := false
+isAutoPressingEnabled := true
 
-; === بدء المؤقتات ===
-SetTimer, PressEKey, %TimerInterval%
-SetTimer, FourMinuteCycle, %MainCycle%
+; === Initialize Timers ===
+SetTimer, AutoPressE, %E_KEY_INTERVAL%
+SetTimer, MainCycleRoutine, %MAIN_CYCLE_DURATION%
 Return
 
-; ======== ضغط E كل 5 ثواني ========
-PressEKey:
-    If (_keepFiring) {
+; ======== Auto E Key Press Routine ========
+AutoPressE:
+    If (isAutoPressingEnabled) {
         Send, e
     }
     Return
 
-; ======== الدورة كل 4 دقائق ========
-FourMinuteCycle:
-    Send, e                    ; الضغط على E أولاً
-    Sleep, 300                 ; انتظار 300 مللي ثانية
-    Send, 9                    ; ثم الضغط على 7
-    Sleep, 300                 ; انتظار آخر
+; ======== Main Cycle Handler ========
+MainCycleRoutine:
+    Send, e                    ; Initial E key press
+    Sleep, 300                 ; Brief delay
+    Send, 9                    ; Press 9 key
+    Sleep, 300                 ; Additional delay
     
-    ; بدء سلسلة النقرات اليسرى
-    ClickCount := 0
-    IsMouseSequenceActive := true
-    SetTimer, MouseClickSequence, 100
+    ; Initialize mouse click sequence
+    mouseClickCounter := 0
+    isMouseSequenceRunning := true
+    SetTimer, MouseClickHandler, 100
     Return
 
-; ======== تسلسل النقرات ========
-MouseClickSequence:
-    If (ClickCount < 20) {
-        ClickCount++
-        Click                   ; نقرة يسارية واحدة
+; ======== Mouse Click Sequence Controller ========
+MouseClickHandler:
+    If (mouseClickCounter < 20) {
+        mouseClickCounter++
+        Click                   ; Single left click
         
-        If (ClickCount = 10) {
-            SetTimer, MouseClickSequence, Off
-            Sleep, 10000        ; انتظار 10 ثواني بعد 10 نقرات
-            SetTimer, MouseClickSequence, 100
+        ; Mid-sequence pause after 10 clicks
+        If (mouseClickCounter = 10) {
+            SetTimer, MouseClickHandler, Off
+            Sleep, 10000        ; 10-second pause
+            SetTimer, MouseClickHandler, 100
         }
-        Else If (ClickCount >= 20) {
-            SetTimer, MouseClickSequence, Off
-            IsMouseSequenceActive := false
+        ; Stop sequence after 20 clicks
+        Else If (mouseClickCounter >= 20) {
+            SetTimer, MouseClickHandler, Off
+            isMouseSequenceRunning := false
         }
     }
     Return
 
-; ======== إيقاف/تشغيل السكريبت ========
-Pause::_keepFiring := !_keepFiring  ; زر Pause لإيقاف/تشغيل الضغط التلقائي
-^Esc::ExitApp                      ; Ctrl+Esc لإغلاق السكريبت
+; ======== Control Hotkeys ========
+Pause::isAutoPressingEnabled := !isAutoPressingEnabled  ; Toggle auto-pressing
+^Esc::ExitApp                      ; Emergency exit shortcut
